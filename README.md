@@ -1,36 +1,277 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EFL B2B Portal — Next.js Implementation
 
-## Getting Started
+This project is a faithful **Next.js implementation** of the EFL B2B Product Category page.
+I migrated the provided static HTML prototype into a modern, highly performant Next.js application using the **App Router**, strict **Server/Client component splitting**, and **URL-based state management**.
 
-First, run the development server:
+---
+
+# 🚀 How to Run the App Locally
+
+To get the project up and running on your local machine, follow these steps:
+
+## 1. Clone the Repository
+
+```bash
+git clone <your-github-repo-url>
+cd efl-b2b-portal
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 3. Start the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 4. View the Application
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open your browser and navigate strictly to:
 
-## Learn More
+```bash
+http://localhost:3000/products/all
+```
 
-To learn more about Next.js, take a look at the following resources:
+> **Note:** The root path `/` is currently unmapped as per the specific routing requirements for the `/products/[category]` route.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 🏗️ Key Architectural Decisions
 
-## Deploy on Vercel
+To ensure the application is scalable, SEO-friendly, and highly performant, I made the following architectural choices based on Next.js best practices:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## App Router & Nested Layouts
+
+I utilized the modern `app/` directory structure.
+
+* Placed the global `Navbar` inside `app/layout.tsx` to prevent unnecessary re-renders across the entire site.
+* Added a nested `app/products/layout.tsx` for product-specific wrappers and layouts.
+
+---
+
+## Strict Server vs. Client Split
+
+I kept the heavy lifting on the server.
+
+### Server Components
+
+* `page.tsx`
+* `ProductGrid`
+
+These are implemented as pure Server Components.
+
+### Client Components
+
+I only used `'use client'` on leaf components that strictly require interactivity or browser APIs, such as:
+
+* `FilterSidebar`
+* `CategoryTabs`
+* `Toolbar`
+
+---
+
+## URL-Based State Management
+
+Instead of relying on local `useState` for filters, sorting, and pagination, all UI state is mapped to URL search parameters.
+
+Example:
+
+```bash
+?category=...&page=...&moq=...
+```
+
+### Benefits
+
+* Deep-linking works perfectly
+* URLs are shareable
+* State survives page refreshes
+* Better SEO and browser navigation behavior
+
+---
+
+## API Route Handlers
+
+I built a dedicated Route Handler at:
+
+```bash
+app/api/products/route.ts
+```
+
+This serves the mock JSON data internally.
+
+### Advantages
+
+* Eliminates client-side `useEffect` data fetching
+* Keeps data fetching server-side
+* Simplifies architecture
+* Improves performance
+
+---
+
+# ⚡ Performance Optimizations
+
+## next/font/google
+
+Replaced standard `<link>` font imports with:
+
+```tsx
+next/font/google
+```
+
+This eliminates:
+
+* Layout shifts
+* Extra network requests
+
+---
+
+## next/image
+
+Used `next/image` for:
+
+* Optimized thumbnails
+* Lazy loading
+* Responsive image sizing
+* Priority loading for above-the-fold content
+
+---
+
+## Dynamic Imports
+
+Used:
+
+```tsx
+next/dynamic
+```
+
+to lazy-load the `QuickViewModal` with:
+
+```tsx
+{ ssr: false }
+```
+
+This ensures the JavaScript bundle for the modal is only downloaded when needed.
+
+---
+
+## Streaming & Suspense
+
+Wrapped the product grid inside a `<Suspense>` boundary paired with a Skeleton UI.
+
+### Benefits
+
+* Prevents Cumulative Layout Shift (CLS)
+* Improves perceived performance
+* Enables progressive rendering
+
+---
+
+## Error Boundaries
+
+Implemented:
+
+```bash
+error.tsx
+```
+
+to gracefully catch data-fetching failures without crashing the entire application layout.
+
+---
+
+# ⚖️ Trade-offs Made
+
+While building this assessment, I made a few deliberate trade-offs to balance complexity with the rubric requirements.
+
+---
+
+## Plain CSS over CSS Modules / Tailwind
+
+To faithfully recreate the exact visual design of the provided prototype and adhere to the assessment constraints, I ported the existing stylesheet directly into:
+
+```bash
+globals.css
+```
+
+using CSS variables.
+
+### Why?
+
+While I typically prefer:
+
+* Tailwind CSS
+* CSS Modules
+
+for component scoping and maintainability, migrating the entire design system would have been unnecessary over-engineering for this specific assessment.
+
+---
+
+## Mock API vs. Real Database
+
+Instead of setting up:
+
+* PostgreSQL
+* Prisma
+* Docker
+* Environment variables
+
+I implemented the data layer using a lightweight Next.js Route Handler returning static JSON.
+
+### Benefits
+
+* Extremely easy to run locally
+* No setup friction for reviewers
+* Lightweight repository
+* Faster evaluation process
+
+---
+
+## Modal State via URL
+
+The Quick-View Modal is controlled using a URL query parameter:
+
+```bash
+?modal=SKU
+```
+
+instead of local React state.
+
+### Why?
+
+This ensures:
+
+* Refresh persistence
+* Shareable modal states
+* Better navigation behavior
+* Consistent application state
+
+---
+
+# 🧪 Tech Stack
+
+* Next.js (App Router)
+* React
+* TypeScript
+* CSS
+* next/image
+* next/font
+* Dynamic Imports
+* Suspense & Streaming
+* Route Handlers
+
+---
+
+# 📌 Assessment Context
+
+Developed for the **EFL Next.js Candidate Assessment**.
