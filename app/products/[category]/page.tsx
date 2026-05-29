@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-
 import CategoryTabs from "@/components/CategoryTabs";
 import FilterSidebar from "@/components/FilterSidebar";
 import Toolbar from "@/components/Toolbar";
