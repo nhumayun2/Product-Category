@@ -12,7 +12,7 @@ To get the project up and running on your local machine, follow these steps:
 ## 1. Clone the Repository
 
 ```bash
-git clone <your-github-repo-url>
+git clone https://github.com/nhumayun2/Product-Category.git
 cd efl-b2b-portal
 ```
 
