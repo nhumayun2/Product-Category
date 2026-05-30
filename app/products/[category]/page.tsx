@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-
 import CategoryTabs from "@/components/CategoryTabs";
 import FilterSidebar from "@/components/FilterSidebar";
 import Toolbar from "@/components/Toolbar";
@@ -9,7 +8,7 @@ import ProductGrid from "@/components/ProductGrid";
 import Pagination from "@/components/Pagination";
 import FloatingCart from "@/components/FloatingCart";
 import ProductGridSkeleton from "@/components/ProductGridSkeleton";
-import QuickViewModal from "@/components/QuickViewModal";
+import ClientModalWrapper from "@/components/ClientModalWrapper";
 
 export async function generateMetadata({ 
   params 
@@ -138,8 +137,8 @@ export default async function ProductCategoryPage({
       {/* ── FLOATING CART ── */}
       <FloatingCart />
 
-      {/* ── QUICK VIEW MODAL ── */}
-      <QuickViewModal />
+      {/* ── QUICK VIEW MODAL WRAPPER ── */}
+      <ClientModalWrapper />
     </>
   );
 }
