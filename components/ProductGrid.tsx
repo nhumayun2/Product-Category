@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { headers } from 'next/headers'; // Used to dynamically detect live production URL
+import { headers } from 'next/headers';
 import WishlistButton from './WishlistButton';
 
 type Product = {
@@ -28,8 +28,6 @@ export default async function ProductGrid({
   searchParams: { [key: string]: string | undefined };
 }) {
   const page = searchParams.page || "1";
-  
-  // Dynamically resolve protocol and host name to guarantee server-side fetch succeeds on Vercel
   const headersList = await headers();
   const host = headersList.get('host') || 'localhost:3000';
   const protocol = host.includes('localhost') ? 'http' : 'https';
