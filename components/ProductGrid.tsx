@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { headers } from 'next/headers'; // Used to dynamically detect live production URL
 import WishlistButton from './WishlistButton';
 
 type Product = {
@@ -28,8 +29,11 @@ export default async function ProductGrid({
 }) {
   const page = searchParams.page || "1";
   
-  // In a Server Component, fetch requires an absolute URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // Dynamically resolve protocol and host name to guarantee server-side fetch succeeds on Vercel
+  const headersList = await headers();
+  const host = headersList.get('host') || 'localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  const baseUrl = `${protocol}://${host}`;
   
   let products: Product[] = [];
   
@@ -77,7 +81,7 @@ export default async function ProductGrid({
       {products.map((product, index) => {
 
         const cardUrl = `?${currentParams.toString()}&modal=${product.sku}`;
-
+        
         const renderThumbIcon = () => {
           if (product.cat.includes('Hoodies')) {
             return <path d="M16 4a2 2 0 01-4 0 2 2 0 01-4 0H2v2c0 5.55 3.84 10.74 9 12c5.16-1.26 9-6.45 9-12V4z"/>;
@@ -91,7 +95,6 @@ export default async function ProductGrid({
               </>
             );
           }
-          // Default T-Shirt SVG
           return <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/>;
         };
         
