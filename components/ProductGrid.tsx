@@ -62,12 +62,12 @@ export default async function ProductGrid({
 
   if (products.length === 0) {
     return (
-      <div className="empty-state">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+      <div className="text-center py-16 px-8 text-text3">
+        <svg className="opacity-20 mb-4 mx-auto" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
-        <h3>No products found</h3>
-        <p>Try adjusting your parameters or category selection.</p>
+        <h3 className="text-[16px] text-text2 mb-1.5">No products found</h3>
+        <p className="text-[13px]">Try adjusting your parameters or category selection.</p>
       </div>
     );
   }
@@ -78,106 +78,122 @@ export default async function ProductGrid({
   });
 
   return (
-    <div className="product-grid" id="productGrid">
-      {products.map((product, index) => {
-        const cardUrl = `?${currentParams.toString()}&modal=${product.sku}`;
-        
-        const renderThumbIcon = () => {
-          if (product.cat.includes('Hoodies')) {
-            return <path d="M16 4a2 2 0 01-4 0 2 2 0 01-4 0H2v2c0 5.55 3.84 10.74 9 12c5.16-1.26 9-6.45 9-12V4z"/>;
-          }
-          if (product.cat.includes('Bags')) {
-            return (
-              <>
-                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 01-8 0"/>
-              </>
-            );
-          }
-          return <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/>;
-        };
-        
-        return (
-          <Link href={cardUrl} key={product.id} className="product-card" scroll={false}>
-            <div className="product-thumb">
-              <div className="thumb-pattern"></div>
+    <>
+      <style>{`
+        @keyframes cardIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+      <div className="grid grid-cols-3 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1 gap-[1.1rem] [&.list-view]:grid-cols-1" id="productGrid">
+        {products.map((product, index) => {
+          const cardUrl = `?${currentParams.toString()}&modal=${product.sku}`;
+          
+          const renderThumbIcon = () => {
+            if (product.cat.includes('Hoodies')) {
+              return <path d="M16 4a2 2 0 01-4 0 2 2 0 01-4 0H2v2c0 5.55 3.84 10.74 9 12c5.16-1.26 9-6.45 9-12V4z"/>;
+            }
+            if (product.cat.includes('Bags')) {
+              return (
+                <>
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </>
+              );
+            }
+            return <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/>;
+          };
+          
+          return (
+            <Link 
+              href={cardUrl} 
+              key={product.id} 
+              className="bg-surface border border-border-main rounded-[14px] shadow-DEFAULT overflow-hidden cursor-pointer transition-all duration-200 relative flex flex-col hover:shadow-hover hover:-translate-y-[2px] hover:border-border2 [.list-view_&]:flex-row [.list-view_&]:h-[160px]" 
+              scroll={false}
+              style={{ animation: 'cardIn 0.35s ease both', animationDelay: `${(index * 0.04).toFixed(2)}s` }}
+            >
+              <div className="aspect-[3/4] bg-surface2 flex items-center justify-center relative overflow-hidden shrink-0 [.list-view_&]:w-[130px] [.list-view_&]:aspect-auto [.list-view_&]:h-full">
+                <div className="absolute inset-0 opacity-[0.04] bg-[repeating-linear-gradient(45deg,var(--color-accent)_0,var(--color-accent)_1px,transparent_0,transparent_50%)] bg-[size:12px_12px]"></div>
 
-              <svg className="thumb-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                {renderThumbIcon()}
-              </svg>
+                <svg className="opacity-12 text-accent" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                  {renderThumbIcon()}
+                </svg>
 
-              <Image 
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='400'%3E%3C/svg%3E"
-                alt={product.name}
-                width={300}
-                height={400}
-                priority={index < 3} 
-                style={{ 
-                  position: 'absolute',
-                  inset: 0,
-                  objectFit: 'contain', 
-                  width: '100%', 
-                  height: '100%', 
-                  zIndex: 1
-                }}
-              />
+                <Image 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='400'%3E%3C/svg%3E"
+                  alt={product.name}
+                  width={300}
+                  height={400}
+                  priority={index < 3} 
+                  style={{ 
+                    position: 'absolute',
+                    inset: 0,
+                    objectFit: 'contain', 
+                    width: '100%', 
+                    height: '100%', 
+                    zIndex: 1
+                  }}
+                />
 
-              <span className="thumb-label">{product.sku}</span>
-              
-              <div className="product-badges">
-                {index === 0 && <span className="product-badge best">Best Seller</span>}
-                {index === 0 && <span className="product-badge eco">Organic</span>}
-                {index === 1 && <span className="product-badge new">New</span>}
+                <span className="absolute bottom-2.5 left-2.5 text-[9px] font-bold tracking-[0.1em] uppercase text-text3 bg-white/85 rounded flex items-center justify-center px-[7px] py-[2px] backdrop-blur-[4px]">{product.sku}</span>
+                
+                <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10 [.list-view_&]:left-[140px] [.list-view_&]:flex-row">
+                  {index === 0 && <span className="text-[9.5px] font-semibold py-[2px] px-[7px] rounded tracking-[0.04em] bg-amber-bg border border-amber-border text-amber">Best Seller</span>}
+                  {index === 0 && <span className="text-[9.5px] font-semibold py-[2px] px-[7px] rounded tracking-[0.04em] bg-green-bg border border-green-border text-green">Organic</span>}
+                  {index === 1 && <span className="text-[9.5px] font-semibold py-[2px] px-[7px] rounded tracking-[0.04em] bg-accent text-white">New</span>}
+                </div>
+
+                <div className="z-10">
+                  <WishlistButton />
+                </div>
               </div>
 
-              <WishlistButton />
-            </div>
+              <div className="p-4 flex-1 flex flex-col [.list-view_&]:px-[1.1rem]">
+                <div className="text-[10px] font-semibold tracking-[0.1em] uppercase text-text3 mb-[3px] [.list-view_&]:mt-auto">{product.cat}</div>
+                <div className="text-[14px] font-semibold text-text-main mb-[2px] leading-[1.3]">{product.name}</div>
+                <div className="text-[11px] text-text3 mb-2">SKU: {product.sku} · {product.weight}</div>
+                
+                <div className="flex flex-wrap gap-1 mb-[10px]">
+                  {product.certs.includes('GRS') && <span className="text-[9.5px] py-[2px] px-[7px] rounded-full font-medium bg-green-bg border border-green-border text-green">GRS Recycled</span>}
+                  {product.certs.includes('OEKO-TEX') && <span className="text-[9.5px] py-[2px] px-[7px] rounded-full font-medium bg-amber-bg border border-amber-border text-amber">OEKO-TEX</span>}
+                  {product.certs.includes('Fair Trade') && <span className="text-[9.5px] py-[2px] px-[7px] rounded-full font-medium bg-[#E8F0F5] border border-[#B0CEDF] text-accent2">Fair Trade</span>}
+                </div>
 
-            <div className="product-info">
-              <div className="product-cat">{product.cat}</div>
-              <div className="product-name">{product.name}</div>
-              <div className="product-sku">SKU: {product.sku} · {product.weight}</div>
-              
-              <div className="product-certs">
-                {product.certs.includes('GRS') && <span className="mini-cert grs">GRS Recycled</span>}
-                {product.certs.includes('OEKO-TEX') && <span className="mini-cert oeko">OEKO-TEX</span>}
-                {product.certs.includes('Fair Trade') && <span className="mini-cert fair">Fair Trade</span>}
-              </div>
-
-              <div className="product-swatches">
-                {product.swatches?.map((swatchColor, sIdx) => (
-                  <div 
-                    key={sIdx} 
-                    className="p-swatch" 
-                    style={{ 
-                      background: swatchColor, 
-                      border: swatchColor === '#F5F5F0' ? '1.5px solid #ccc' : '1.5px solid rgba(0,0,0,0.08)' 
-                    }}
-                  ></div>
-                ))}
-                {product.moreSwatches && <span className="swatch-more">+{product.moreSwatches}</span>}
-              </div>
-              
-              <div className="product-footer">
-                <div className="price-block">
-                  <div className="price-from">From</div>
-                  <div className="price-val">{product.price}</div>
-                  <div className="price-unit">per piece · excl. branding</div>
-                  <div className="moq-note">MOQ {product.moq}</div>
+                <div className="flex gap-1 mb-[10px] items-center">
+                  {product.swatches?.map((swatchColor, sIdx) => (
+                    <div 
+                      key={sIdx} 
+                      className="w-[14px] h-[14px] rounded-full" 
+                      style={{ 
+                        background: swatchColor, 
+                        border: swatchColor === '#F5F5F0' ? '1.5px solid #ccc' : '1.5px solid rgba(0,0,0,0.08)' 
+                      }}
+                    ></div>
+                  ))}
+                  {product.moreSwatches && <span className="text-[10px] text-text3 ml-0.5">+{product.moreSwatches}</span>}
                 </div>
                 
-                <div className="order-btn">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                  Order
+                <div className="flex items-end justify-between mt-auto pt-2 border-t border-border-main [.list-view_&]:border-t-0 [.list-view_&]:pt-0 [.list-view_&]:mt-2">
+                  <div>
+                    <div className="text-[10px] text-text3">From</div>
+                    <div className="text-[17px] font-bold text-accent leading-none">{product.price}</div>
+                    <div className="text-[10.5px] text-text3 mt-[1px]">per piece · excl. branding</div>
+                    <div className="text-[10px] text-text3 mt-[2px]">MOQ {product.moq}</div>
+                  </div>
+                  
+                  <div className="flex items-center gap-[6px] bg-accent text-white text-[12px] font-medium py-[7px] px-[14px] rounded-lg border-none cursor-pointer font-dm-sans transition-colors hover:bg-accent2 no-underline whitespace-nowrap">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                    Order
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 }

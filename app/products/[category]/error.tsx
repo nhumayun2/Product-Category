@@ -13,34 +13,18 @@ export default function Error({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div 
-      className="main-layout" 
-      style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '60vh',
-        width: '100%'
-      }}
-    >
-      <div 
-        className="sidebar-card" 
-        style={{ 
-          maxWidth: '500px', 
-          width: '100%', 
-          textAlign: 'center', 
-          padding: '2.5rem' 
-        }}
-      >
-        <div style={{ marginBottom: '1.5rem' }}>
+    <div className="flex justify-center items-center min-h-[60vh] w-full max-w-[1200px] mx-auto px-4 sm:px-8 py-6">
+      <div className="bg-surface border border-border-main rounded-[14px] shadow-DEFAULT max-w-[500px] w-full text-center p-10">
+        
+        <div className="mb-6">
           <svg 
             width="64" 
             height="64" 
             viewBox="0 0 24 24" 
             fill="none" 
-            stroke="var(--amber)" 
+            stroke="currentColor" 
             strokeWidth="1.5"
-            style={{ margin: '0 auto' }}
+            className="mx-auto text-amber"
           >
             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
             <line x1="12" y1="9" x2="12" y2="13"/>
@@ -48,27 +32,25 @@ export default function Error({ error, reset }: ErrorProps) {
           </svg>
         </div>
         
-        <h2 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.8rem', color: 'var(--accent)', marginBottom: '1rem' }}>
+        <h2 className="font-playfair text-[1.8rem] text-accent mb-4">
           Something went wrong!
         </h2>
         
-        <p style={{ color: 'var(--text2)', fontSize: '14px', lineHeight: '1.6', marginBottom: '2rem' }}>
+        <p className="text-text2 text-[14px] leading-[1.6] mb-8">
           {error.message || "We encountered an unexpected issue while loading the apparel catalog. Please try reloading."}
         </p>
         
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+        <div className="flex gap-3 justify-center">
           <button 
-            className="btn-secondary" 
+            className="bg-surface2 text-text-main border border-border2 rounded-[10px] py-2.5 px-5 text-[13px] cursor-pointer font-dm-sans transition-all duration-150 hover:border-accent2 hover:text-accent" 
             onClick={() => window.location.href = '/products/all'}
-            style={{ padding: '10px 20px' }}
           >
             Back to Catalog
           </button>
           
           <button 
-            className="btn-primary" 
+            className="bg-accent text-white border-none rounded-[10px] py-2.5 px-6 text-[13px] font-medium cursor-pointer font-dm-sans transition-colors duration-150 hover:bg-accent2" 
             onClick={() => reset()}
-            style={{ padding: '10px 24px' }}
           >
             Try Again
           </button>

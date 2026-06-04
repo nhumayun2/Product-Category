@@ -52,30 +52,43 @@ export default function FilterSidebar() {
   ];
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-card">
-        <div className="sidebar-header">
-          <h4>Filters</h4>
-          <button className="sidebar-clear" onClick={clearFilters}>Clear all</button>
+    <aside className="sticky top-[116px] max-[900px]:hidden">
+      
+      {/* Filters Card */}
+      <div className="bg-surface border border-border-main rounded-[14px] shadow-DEFAULT mb-4 overflow-hidden">
+        
+        {/* Header */}
+        <div className="py-3 px-4 border-b border-border-main bg-surface2 flex items-center justify-between">
+          <h4 className="text-[11px] font-bold tracking-[0.09em] uppercase text-accent">Filters</h4>
+          <button 
+            className="text-[11px] text-text3 cursor-pointer underline bg-none border-none font-dm-sans hover:text-accent" 
+            onClick={clearFilters}
+          >
+            Clear all
+          </button>
         </div>
-        <div className="sidebar-body">
-          <div className="filter-group">
-            <span className="filter-label">Certifications</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+
+        {/* Body */}
+        <div className="py-[0.85rem] px-4">
+          
+          {/* Certifications */}
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Certifications</span>
+            <div className="flex flex-wrap">
               <span 
-                className={`cert-badge grs ${currentCert === 'grs' ? 'active' : ''}`} 
+                className={`inline-flex items-center gap-[5px] text-[11px] py-[3px] px-[9px] rounded-full font-medium cursor-pointer m-[2px] transition-all duration-150 bg-green-bg border border-green-border text-green ${currentCert === 'grs' ? 'brightness-90' : ''}`} 
                 onClick={() => updateFilter('cert', currentCert === 'grs' ? null : 'grs')}
               >
                 {currentCert === 'grs' ? '✓ ' : ''}GRS Recycled
               </span>
               <span 
-                className={`cert-badge oeko ${currentCert === 'oeko' ? 'active' : ''}`} 
+                className={`inline-flex items-center gap-[5px] text-[11px] py-[3px] px-[9px] rounded-full font-medium cursor-pointer m-[2px] transition-all duration-150 bg-amber-bg border border-amber-border text-amber ${currentCert === 'oeko' ? 'brightness-90' : ''}`} 
                 onClick={() => updateFilter('cert', currentCert === 'oeko' ? null : 'oeko')}
               >
                 {currentCert === 'oeko' ? '✓ ' : ''}OEKO-TEX
               </span>
               <span 
-                className={`cert-badge fair ${currentCert === 'fair' ? 'active' : ''}`} 
+                className={`inline-flex items-center gap-[5px] text-[11px] py-[3px] px-[9px] rounded-full font-medium cursor-pointer m-[2px] transition-all duration-150 bg-[#E8F0F5] border border-[#B0CEDF] text-accent2 ${currentCert === 'fair' ? 'brightness-90' : ''}`} 
                 onClick={() => updateFilter('cert', currentCert === 'fair' ? null : 'fair')}
               >
                 {currentCert === 'fair' ? '✓ ' : ''}Fair Trade
@@ -84,90 +97,136 @@ export default function FilterSidebar() {
           </div>
 
           {/* Fabric */}
-          <div className="filter-group">
-            <span className="filter-label">Fabric</span>
-            <label className="filter-check"><input type="checkbox" defaultChecked /> Organic Cotton <span className="filter-check-count">38</span></label>
-            <label className="filter-check"><input type="checkbox" /> Recycled Polyester <span className="filter-check-count">22</span></label>
-            <label className="filter-check"><input type="checkbox" /> Bamboo Blend <span className="filter-check-count">11</span></label>
-            <label className="filter-check"><input type="checkbox" /> Hemp Cotton <span className="filter-check-count">8</span></label>
-            <label className="filter-check"><input type="checkbox" /> Tencel / Lyocell <span className="filter-check-count">6</span></label>
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Fabric</span>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" defaultChecked /> Organic Cotton 
+              <span className="ml-auto text-[11px] text-text3">38</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Recycled Polyester 
+              <span className="ml-auto text-[11px] text-text3">22</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Bamboo Blend 
+              <span className="ml-auto text-[11px] text-text3">11</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Hemp Cotton 
+              <span className="ml-auto text-[11px] text-text3">8</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Tencel / Lyocell 
+              <span className="ml-auto text-[11px] text-text3">6</span>
+            </label>
           </div>
 
           {/* Gender */}
-          <div className="filter-group">
-            <span className="filter-label">Gender</span>
-            <label className="filter-check"><input type="checkbox" defaultChecked /> Unisex <span className="filter-check-count">54</span></label>
-            <label className="filter-check"><input type="checkbox" /> Women&apos;s Fit <span className="filter-check-count">28</span></label>
-            <label className="filter-check"><input type="checkbox" /> Men&apos;s Fit <span className="filter-check-count">14</span></label>
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Gender</span>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" defaultChecked /> Unisex 
+              <span className="ml-auto text-[11px] text-text3">54</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Women&apos;s Fit 
+              <span className="ml-auto text-[11px] text-text3">28</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Men&apos;s Fit 
+              <span className="ml-auto text-[11px] text-text3">14</span>
+            </label>
           </div>
 
           {/* Colours Available */}
-          <div className="filter-group">
-            <span className="filter-label">Colours Available</span>
-            <div className="color-dots">
-              {colors.map((color, index) => (
-                <div 
-                  key={index}
-                  className={`color-dot ${selectedColors.includes(color.bg) ? 'selected' : ''}`} 
-                  style={{ background: color.bg, border: color.border || '2px solid transparent' }} 
-                  title={color.title}
-                  onClick={() => toggleColor(color.bg)}
-                ></div>
-              ))}
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Colours Available</span>
+            <div className="flex flex-wrap gap-1.5 mt-1">
+              {colors.map((color, index) => {
+                const isSelected = selectedColors.includes(color.bg);
+                return (
+                  <div 
+                    key={index}
+                    className={`w-5 h-5 rounded-full cursor-pointer border-2 transition-transform duration-150 relative hover:scale-[1.15] ${isSelected ? 'border-accent shadow-[0_0_0_2px_rgba(27,58,75,0.25)]' : 'border-transparent'}`} 
+                    style={{ 
+                      background: color.bg, 
+                      ...(color.border && !isSelected ? { border: color.border } : {})
+                    }} 
+                    title={color.title}
+                    onClick={() => toggleColor(color.bg)}
+                  ></div>
+                );
+              })}
             </div>
           </div>
 
           {/* Price Range */}
-          <div className="filter-group">
-            <span className="filter-label">Price (USD / pc)</span>
-            <div className="price-range">
-              <div className="range-row">
-                <input type="number" className="range-inp" placeholder="$2.00" defaultValue="2" id="priceMin" />
-                <span className="range-sep">–</span>
-                <input type="number" className="range-inp" placeholder="$30.00" defaultValue="30" id="priceMax" />
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Price (USD / pc)</span>
+            <div className="mt-1">
+              <div className="flex items-center gap-2">
+                <input type="number" className="flex-1 py-1.5 px-2 border border-border2 rounded-md text-xs font-dm-sans text-text-main bg-surface outline-none focus:border-accent2 focus:shadow-[0_0_0_3px_rgba(45,95,120,0.1)]" placeholder="$2.00" defaultValue="2" id="priceMin" />
+                <span className="text-text3 text-xs">–</span>
+                <input type="number" className="flex-1 py-1.5 px-2 border border-border2 rounded-md text-xs font-dm-sans text-text-main bg-surface outline-none focus:border-accent2 focus:shadow-[0_0_0_3px_rgba(45,95,120,0.1)]" placeholder="$30.00" defaultValue="30" id="priceMax" />
               </div>
             </div>
           </div>
 
           {/* MOQ Slider (Wired to URL) */}
-          <div className="filter-group">
-            <span className="filter-label">Min Order Qty (pcs)</span>
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Min Order Qty (pcs)</span>
             <input 
               type="range" 
-              className="moq-slider" 
+              className="w-full mt-1.5 accent-accent" 
               min="50" max="500" step="50" 
               value={currentMoq}
               onChange={(e) => updateFilter('moq', e.target.value)}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--text3)', marginTop: '4px' }}>
+            <div className="flex justify-between text-[11px] text-text3 mt-1">
               <span>50 pcs</span>
-              <span id="moqVal" style={{ fontWeight: 'bold', color: 'var(--accent)' }}>{currentMoq} pcs</span>
+              <span id="moqVal" className="font-bold text-accent">{currentMoq} pcs</span>
               <span>500 pcs</span>
             </div>
           </div>
 
           {/* Availability */}
-          <div className="filter-group">
-            <span className="filter-label">Availability</span>
-            <label className="filter-check"><input type="checkbox" defaultChecked /> In Stock <span className="filter-check-count">72</span></label>
-            <label className="filter-check"><input type="checkbox" /> Made to Order <span className="filter-check-count">24</span></label>
-            <label className="filter-check"><input type="checkbox" /> New Arrivals <span className="filter-check-count">11</span></label>
+          <div className="mb-4 last:mb-0">
+            <span className="text-[11px] font-semibold tracking-[0.07em] uppercase text-text3 mb-2 block">Availability</span>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" defaultChecked /> In Stock 
+              <span className="ml-auto text-[11px] text-text3">72</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> Made to Order 
+              <span className="ml-auto text-[11px] text-text3">24</span>
+            </label>
+            <label className="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-text2 transition-colors duration-150 hover:text-text-main">
+              <input type="checkbox" className="accent-accent w-[14px] h-[14px] cursor-pointer shrink-0" /> New Arrivals 
+              <span className="ml-auto text-[11px] text-text3">11</span>
+            </label>
           </div>
 
         </div>
       </div>
 
-      <div className="sidebar-card">
-        <div className="sidebar-header"><h4>Need Help?</h4></div>
-        <div className="sidebar-body">
-          <p style={{ fontSize: '12px', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '10px' }}>
+      {/* Help Card */}
+      <div className="bg-surface border border-border-main rounded-[14px] shadow-DEFAULT mb-4 overflow-hidden">
+        <div className="py-3 px-4 border-b border-border-main bg-surface2 flex items-center justify-between">
+          <h4 className="text-[11px] font-bold tracking-[0.09em] uppercase text-accent">Need Help?</h4>
+        </div>
+        <div className="py-[0.85rem] px-4">
+          <p className="text-[12px] text-text2 leading-[1.6] mb-2.5">
             Not finding what you need? Our team can source custom styles or suggest alternatives.
           </p>
-          <a href="mailto:orders@earthfashionltd.com" style={{ display: 'block', textAlign: 'center', background: 'var(--surface2)', border: '1px solid var(--border2)', borderRadius: 'var(--radius)', padding: '8px', fontSize: '12px', color: 'var(--accent)', textDecoration: 'none', fontWeight: 500, transition: 'all 0.15s' }}>
+          <a 
+            href="mailto:orders@earthfashionltd.com" 
+            className="block text-center bg-surface2 border border-border2 rounded-[10px] p-2 text-[12px] text-accent no-underline font-medium transition-all duration-150 hover:border-accent2"
+          >
             📧 Contact Sales Team
           </a>
         </div>
       </div>
+
     </aside>
   );
 }

@@ -46,28 +46,38 @@ export default function Toolbar() {
   };
 
   return (
-    <div className="toolbar">
-      <div className="toolbar-left">
-        <div className="results-info">Showing results</div>
-        <div className="active-filters">
+    <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+      <div className="flex items-center gap-3">
+        <div className="text-[13px] text-text2">Showing <strong className="text-text-main">results</strong></div>
+        <div className="flex flex-wrap gap-1.5">
           {/* Dynamically render chips if the filter exists in the URL */}
           {activeCert && (
-            <span className="active-filter" onClick={() => removeFilter('cert')}>
+            <span 
+              className="flex items-center gap-[5px] text-[11.5px] bg-info-bg border border-[#B0CEDF] text-accent2 rounded-full py-[3px] px-[10px] cursor-pointer hover:bg-[#D8E8F0] transition-colors" 
+              onClick={() => removeFilter('cert')}
+            >
               {activeCert === 'grs' ? 'GRS Recycled' : activeCert === 'oeko' ? 'OEKO-TEX' : 'Fair Trade'} 
-              <span className="rm">×</span>
+              <span className="text-[14px] leading-none opacity-70">×</span>
             </span>
           )}
           
           {activeMoq && activeMoq !== '50' && (
-            <span className="active-filter" onClick={() => removeFilter('moq')}>
-              MOQ: {activeMoq} pcs <span className="rm">×</span>
+            <span 
+              className="flex items-center gap-[5px] text-[11.5px] bg-info-bg border border-[#B0CEDF] text-accent2 rounded-full py-[3px] px-[10px] cursor-pointer hover:bg-[#D8E8F0] transition-colors" 
+              onClick={() => removeFilter('moq')}
+            >
+              MOQ: {activeMoq} pcs <span className="text-[14px] leading-none opacity-70">×</span>
             </span>
           )}
         </div>
       </div>
       
-      <div className="toolbar-right">
-        <select className="sort-select" value={activeSort} onChange={handleSort}>
+      <div className="flex items-center gap-3">
+        <select 
+          className="py-[7px] px-3 border border-border2 rounded-[10px] text-[12.5px] text-text-main bg-surface font-dm-sans outline-none cursor-pointer focus:border-accent2" 
+          value={activeSort} 
+          onChange={handleSort}
+        >
           <option value="popular">Most Popular</option>
           <option value="newest">Newest First</option>
           <option value="price-asc">Price: Low to High</option>
@@ -75,9 +85,9 @@ export default function Toolbar() {
           <option value="moq-asc">MOQ: Low to High</option>
         </select>
         
-        <div className="view-toggle">
+        <div className="flex border border-border2 rounded-[10px] overflow-hidden">
           <button 
-            className={`view-btn ${view === 'grid' ? 'active' : ''}`} 
+            className={`py-[7px] px-2.5 flex items-center transition-all duration-150 cursor-pointer ${view === 'grid' ? 'bg-accent text-white' : 'bg-surface text-text3 hover:bg-surface2 hover:text-text2'}`} 
             onClick={() => toggleView('grid')} 
             title="Grid view"
           >
@@ -89,7 +99,7 @@ export default function Toolbar() {
             </svg>
           </button>
           <button 
-            className={`view-btn ${view === 'list' ? 'active' : ''}`} 
+            className={`py-[7px] px-2.5 flex items-center transition-all duration-150 cursor-pointer ${view === 'list' ? 'bg-accent text-white' : 'bg-surface text-text3 hover:bg-surface2 hover:text-text2'}`} 
             onClick={() => toggleView('list')} 
             title="List view"
           >

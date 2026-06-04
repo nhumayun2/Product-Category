@@ -25,19 +25,24 @@ export default function CategoryTabs({ currentCategory }: { currentCategory: str
   };
 
   return (
-    <div className="cat-tabs-wrapper">
-      <div className="cat-tabs" id="catTabs">
-        {tabs.map((tab) => (
-          <div 
-            key={tab.id}
-            className={`cat-tab ${currentCategory === tab.id ? 'active' : ''}`}
-            onClick={() => handleTabClick(tab.id)}
-          >
-            <span className="cat-tab-icon">{tab.icon}</span> 
-            {tab.label} 
-            <span className="cat-count">{tab.count}</span>
-          </div>
-        ))}
+    <div className="bg-surface border-b border-border-main sticky top-[56px] z-[150] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-8 flex gap-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {tabs.map((tab) => {
+          const isActive = currentCategory === tab.id;
+          return (
+            <div 
+              key={tab.id}
+              className={`flex items-center gap-2 px-[18px] h-[48px] border-b-2 text-[13px] cursor-pointer whitespace-nowrap transition-all duration-150 select-none hover:text-accent ${isActive ? 'text-accent border-accent font-semibold' : 'border-transparent text-text2 font-medium'}`}
+              onClick={() => handleTabClick(tab.id)}
+            >
+              <span className="text-[16px] opacity-80">{tab.icon}</span> 
+              {tab.label} 
+              <span className={`text-[10px] rounded-full py-[1px] px-[7px] font-semibold ${isActive ? 'bg-accent text-white' : 'bg-surface2 text-text3'}`}>
+                {tab.count}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

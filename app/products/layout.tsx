@@ -4,7 +4,7 @@ export default function ProductsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="products-section-wrapper">
+    <section>
       {children}
     </section>
   );

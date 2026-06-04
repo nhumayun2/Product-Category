@@ -6,7 +6,7 @@ const QuickViewModalElement = dynamic(
   () => import('@/components/QuickViewModal'),
   { 
     ssr: false, 
-    loading: () => <div style={{ display: 'none' }}>Loading Modal Context...</div> 
+    loading: () => <div className="hidden">Loading Modal Context...</div> 
   }
 );
 

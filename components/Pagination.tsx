@@ -21,10 +21,14 @@ export default function Pagination() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const baseBtnClass = "w-[34px] h-[34px] rounded-[10px] border text-[13px] flex items-center justify-center transition-all duration-150 font-dm-sans disabled:opacity-35 disabled:cursor-not-allowed";
+  const inactiveBtnClass = "border-border2 bg-surface text-text2 hover:border-accent2 hover:text-accent hover:bg-surface2 cursor-pointer";
+  const activeBtnClass = "bg-accent text-white border-accent cursor-default";
+
   return (
-    <div className="pagination">
+    <div className="flex items-center justify-center gap-[6px] mt-8 pb-8">
       <button 
-        className="page-btn" 
+        className={`${baseBtnClass} ${inactiveBtnClass}`} 
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
@@ -32,37 +36,37 @@ export default function Pagination() {
       </button>
       
       <button 
-        className={`page-btn ${currentPage === 1 ? 'active' : ''}`}
+        className={`${baseBtnClass} ${currentPage === 1 ? activeBtnClass : inactiveBtnClass}`}
         onClick={() => handlePageChange(1)}
       >
         1
       </button>
       
       <button 
-        className={`page-btn ${currentPage === 2 ? 'active' : ''}`}
+        className={`${baseBtnClass} ${currentPage === 2 ? activeBtnClass : inactiveBtnClass}`}
         onClick={() => handlePageChange(2)}
       >
         2
       </button>
       
       <button 
-        className={`page-btn ${currentPage === 3 ? 'active' : ''}`}
+        className={`${baseBtnClass} ${currentPage === 3 ? activeBtnClass : inactiveBtnClass}`}
         onClick={() => handlePageChange(3)}
       >
         3
       </button>
       
-      <span className="page-ellipsis">…</span>
+      <span className="text-text3 text-[13px] px-1">…</span>
       
       <button 
-        className={`page-btn ${currentPage === 11 ? 'active' : ''}`}
+        className={`${baseBtnClass} ${currentPage === 11 ? activeBtnClass : inactiveBtnClass}`}
         onClick={() => handlePageChange(11)}
       >
         11
       </button>
       
       <button 
-        className="page-btn" 
+        className={`${baseBtnClass} ${inactiveBtnClass}`} 
         disabled={currentPage === totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
